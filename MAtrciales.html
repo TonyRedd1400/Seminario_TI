@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Operaciones Matriciales</title>
+</head>
+<body>
+    <h1>Representación de Transformaciones Matriciales</h1>
+    <p>Ingrese los valores de la matriz y los vectores para ver cómo se transforman:</p>
+    <form id="inputForm">
+        <label>Matriz (2x2):</label><br>
+        <input type="number" id="m11" value="1" step="0.1"> 
+        <input type="number" id="m12" value="0" step="0.1"><br>
+        <input type="number" id="m21" value="0" step="0.1"> 
+        <input type="number" id="m22" value="1" step="0.1"><br><br>
+        <label>Vector original (x, y):</label><br>
+        <input type="number" id="v1" value="1" step="0.1"> 
+        <input type="number" id="v2" value="0" step="0.1"><br><br>
+        <button type="button" onclick="plotGraph()">Graficar</button>
+    </form>
+    <div id="plot"></div>
+
+    <script>
+        function plotGraph() {
+            // Leer los valores de la matriz y el vector
+            const m11 = parseFloat(document.getElementById('m11').value);
+            const m12 = parseFloat(document.getElementById('m12').value);
+            const m21 = parseFloat(document.getElementById('m21').value);
+            const m22 = parseFloat(document.getElementById('m22').value);
+            const v1 = parseFloat(document.getElementById('v1').value);
+            const v2 = parseFloat(document.getElementById('v2').value);
+
+            // Matriz de transformación
+            const matrix = [[m11, m12], [m21, m22]];
+
+            // Vector transformado
+            const transformed = [
+                m11 * v1 + m12 * v2,
+                m21 * v1 + m22 * v2
+            ];
+
+            // Datos para la gráfica
+            const data = [
+                // Vector original
+                {
+                    x: [0, v1],
+                    y: [0, v2],
+                    mode: 'lines+markers',
+                    name: 'Vector original',
+                    line: {color: 'blue'}
+                },
+                // Vector transformado
+                {
+                    x: [0, transformed[0]],
+                    y: [0, transformed[1]],
+                    mode: 'lines+markers',
+                    name: 'Vector transformado',
+                    line: {color: 'red'}
+                }
+            ];
+
+            // Configuración de la gráfica
+            const layout = {
+                title: 'Transformación de Vectores',
+                xaxis: {title: 'X'},
+                yaxis: {title: 'Y'},
+                showlegend: true
+            };
+
+            // Dibujar la gráfica
+            Plotly.newPlot('plot', data, layout);
+        }
+
+        // Graficar valores iniciales
+        plotGraph();
+    </script>
+</body>
+</html>
